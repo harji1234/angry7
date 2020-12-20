@@ -11,7 +11,8 @@ var bird, slingshot;
 var gameState = "onSling";
 
 function preload() {
-    backgroundImg = loadImage("sprites/bg.png");
+    datetime();
+    
 }
 
 function setup(){
@@ -45,6 +46,7 @@ function setup(){
 }
 
 function draw(){
+    if(backgroundImg)
     background(backgroundImg);
     Engine.update(engine);
     //strokeWeight(4);
@@ -85,4 +87,18 @@ function keyPressed(){
     if(keyCode === 32){
        // slingshot.attach(bird.body);
     }
+}
+
+async function datetime () {
+var response= await fetch("http://worldtimeapi.org/api/timezone/America/Detroit")
+var respJson= await response.json();
+var dt = respJson.datetime;
+var hour = dt.slice(11,13)
+if(hour>=06&&hour<=18) {
+    backgroundImg = loadImage("sprites/bg.png");
+}
+else{
+    backgroundImg = loadImage("sprites/bg2.jpg");
+}
+console.log(hour)
 }
